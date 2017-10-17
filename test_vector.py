@@ -1,6 +1,8 @@
 import unittest
 import vector
 import random
+# from hypothesis import * # bad move, hard to deduce later
+import hypothesis
 
 class TestVectorClass(unittest.TestCase):
     def test_meta(self):
@@ -18,13 +20,18 @@ class TestVectorClass(unittest.TestCase):
         self.assertEqual(-1.0, vec2.values[1])
         self.assertEqual(3.5, vec2.values[2])
 
-    def test_vector_magnitude(self):
+    @hypothesis.given(
+        scalar=hypothesis.strategies.floats(
+            min_value=-.2, max_value=2.0
+            )
+        )
+    def test_vector_magnitude(self, scalar):
         vec1 = vector.Vector([3,2,-7])
-        scalar = 3.4-random.random()*4
+        # scalar = 3.4-random.random()*4
         first_mag = vec1.magnitude()
         vec1.scalar_mult(scalar)
         difference = first_mag*scalar-vec1.magnitude()
-        print(scalar)
+        # print(scalar)
         rel_err = abs(difference/vec1.magnitude())
         self.assertLess(rel_err, 10**-12)
 
