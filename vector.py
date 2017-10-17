@@ -12,8 +12,12 @@ class Vector:
         for val_index in range(len(self.values)):
             self.values[val_index]*=scalar
 
-vec1 = Vector([1,2,3])
-print(vec1)
-print(vec1.values)
-print(vec1.scalar_mult(3))
-print(vec1.values)
+def driver():
+    vec1 = Vector([1,2,3])
+    print(vec1)
+    print(vec1.values)
+    print(vec1.scalar_mult(3))
+    print(vec1.values)
+
+if __name__ == "__main__":
+    driver()
