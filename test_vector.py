@@ -5,6 +5,18 @@ import random
 import hypothesis
 
 class TestVectorClass(unittest.TestCase):
+
+    @hypothesis.strategies.composite
+    def arbitrary_vector(draw):
+        output = []
+        for loop in range(3):
+            output.append(
+                draw(
+                    hypothesis.strategies.floats(min_value=-.2, max_value=2.0)
+                    )
+                )
+        return vector.Vector(output)
+
     def test_meta(self):
         self.assertTrue(True)
 
@@ -38,8 +50,24 @@ class TestVectorClass(unittest.TestCase):
         else:
             self.assertEqual(0, vec1.magnitude())
 
+    # @hypothesis.given(
+    #     vec1=hypothesis.strategies.lists(
+    #         hypothesis.strategies.floats(min_value=-.2, max_value=2.0),
+    #         hypothesis.strategies.floats(min_value=-.2, max_value=2.0),
+    #         hypothesis.strategies.floats(min_value=-.2, max_value=2.0)
+    #         ),
+    #     vec2=hypothesis.strategies.lists(
+    #         hypothesis.strategies.floats(min_value=-.2, max_value=2.0),
+    #         hypothesis.strategies.floats(min_value=-.2, max_value=2.0),
+    #         hypothesis.strategies.floats(min_value=-.2, max_value=2.0)
+    #         )
+    #     )
+    @hypothesis.given(
+        vec1=arbitrary_vector(),
+        vec2=arbitrary_vector()
+        )
     def test_dot_product(self, vec1, vec2):
-        self.assertLess(
+        self.assertLessEqual(
             vec1.dot(vec2),
             vec1.magnitude()*vec2.magnitude()
             )

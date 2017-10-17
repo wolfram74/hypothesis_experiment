@@ -19,3 +19,9 @@ class Vector:
         for element in self.values:
             total += element**2
         return total**0.5
+
+    def dot(self, other_vec):
+        total = 0
+        for ele_index in range(len(self.values)):
+            total +=  self.values[ele_index]*other_vec.values[ele_index]
+        return total
