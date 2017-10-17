@@ -13,5 +13,9 @@ class Vector:
             self.values[val_index]*=scalar
 
     def magnitude(self):
-        squares = map(lambda x: x**2, self.values)
-        return sum(squares)**0.5
+        # squares = map(lambda x: x**2, self.values)
+        # return sum(squares)**0.5
+        total = 0
+        for element in self.values:
+            total += element**2
+        return total**0.5

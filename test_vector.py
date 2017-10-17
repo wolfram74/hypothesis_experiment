@@ -30,10 +30,19 @@ class TestVectorClass(unittest.TestCase):
         # scalar = 3.4-random.random()*4
         first_mag = vec1.magnitude()
         vec1.scalar_mult(scalar)
-        difference = first_mag*scalar-vec1.magnitude()
-        # print(scalar)
-        rel_err = abs(difference/vec1.magnitude())
-        self.assertLess(rel_err, 10**-12)
+        difference = first_mag*abs(scalar)-vec1.magnitude()
+        # print(scalar, vec1.values, vec1.magnitude(), first_mag*scalar)
+        if scalar != 0:
+            rel_err = abs(difference/vec1.magnitude())
+            self.assertLess(rel_err, 10**-12)
+        else:
+            self.assertEqual(0, vec1.magnitude())
+
+    def test_dot_product(self, vec1, vec2):
+        self.assertLess(
+            vec1.dot(vec2),
+            vec1.magnitude()*vec2.magnitude()
+            )
 
 if __name__ == "__main__":
     unittest.main()
